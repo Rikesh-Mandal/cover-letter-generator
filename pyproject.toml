@@ -1,0 +1,22 @@
+[project]
+name = "cover-letter-generator"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Rikesh Mandal", email = "rikesh.mandal26@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "openai>=3.19.2",
+    "pymupdf>=1.28.2",
+    "python-dotenv>=1.2.3",
+    "trafilatura>=2.2.0",
+]
+
+[project.scripts]
+cover-letter-generator = "cover_letter_generator:main"
+
+[build-system]
+requires = ["uv_build>=0.12.17,<0.13.0"]
+build-backend = "uv_build"
