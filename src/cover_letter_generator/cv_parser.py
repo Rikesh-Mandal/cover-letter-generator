@@ -1,16 +1,13 @@
 import pymupdf
 
-doc = pymupdf.open("D:/C.V/Rikesh_Mandal_CV.pdf")
-
-
 def parsePdf(path):
-    doc = pymupdf.open(path)    # open a document
-    out = open("output.txt", "wb")  # create a text output
+    if not path.endswith(".pdf"):
+        return "Please upload a .pdf file"
+    doc = pymupdf.open(path)    # open a file as a doc object
+    pages = []  # empty list to append pages in the file
     for page in doc:
-        text = page.get_text().encode("utf-8")  # get plain text (utf-8)
-        out.write(text) # write text of page
-        out.write(bytes((12,))) # write page delimeter (from feed 0x0c)
-    out.close()
+        pages.append(page.get_text())
     doc.close()
+    return "\n".join(pages)
 
-parsePdf("D:/C.V/Rikesh_Mandal_CV.pdf")
+print(parsePdf("D:/C.V/Rikesh_Mandal_CV.pdf"))
