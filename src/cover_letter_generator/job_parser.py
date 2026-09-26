@@ -1,10 +1,10 @@
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 import requests
-
+from cover_letter_generator.url_security import safe_get
 
 # Standard headers to fetch a website
-headers = {
+HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36"
 }
 
@@ -24,16 +24,15 @@ def fetch_website_contents(url):
     """
     if not is_valid_url(url):
         return ("Invalid URL!")
-    response = requests.get(url, headers=headers, timeout=10)
+    response = safe_get(url, headers=HEADERS)
     soup = BeautifulSoup(response.content, "html.parser")
-    title = soup.title.string if soup.title else "No title found"
+    title = soup.title.string.strip() if soup.title else "No title found"
     if not soup.body:
-        text = ""
-    else:
-        for irrelevant in soup.body(["script", "style", "img", "input"]):
-            irrelevant.decompose()
-        text = soup.body.get_text(separator="\n", strip=True)
-    return title + "\n\n" + text
+        return title
+    for irrelevant in soup.body(["script", "style", "img", "input"]):
+        irrelevant.decompose()
+    text = soup.body.get_text(separator="\n", strip=True)
+    return f"{title}\n\n{text}"
 
 
 def fetch_website_links(url):

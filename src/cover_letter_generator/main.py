@@ -8,6 +8,7 @@ client = OpenAI()
 def generate(messages):
     # The current OpenAI guidance recommends Responses API for new text-generation applications rather than Chat Completions API
     response = client.responses.create(model="gpt-4.1-mini", input=messages) 
+    print (response.output_text)
     return response.output_text
 
 cv = cv_parser.parse_pdf("D:/C.V/Rikesh_Mandal_CV.pdf")
