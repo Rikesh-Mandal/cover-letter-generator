@@ -1,13 +1,13 @@
 import pymupdf
 
-def parsePdf(path):
-    if not path.endswith(".pdf"):
-        return "Please upload a .pdf file"
-    doc = pymupdf.open(path)    # open a file as a doc object
-    pages = []  # empty list to append pages in the file
-    for page in doc:
-        pages.append(page.get_text())
-    doc.close()
-    return "\n".join(pages)
-
-print(parsePdf("D:/C.V/Rikesh_Mandal_CV.pdf"))
+def parse_pdf(path: str) -> str:
+    if not path.lower().endswith(".pdf"):
+        raise ValueError("Please upload a PDF file.")
+    pages = []  
+    with pymupdf.open(path) as doc:
+        for page in doc:
+            pages.append(page.get_text())
+    text = "\n".join(pages).strip()
+    if not text:
+        raise ValueError("No text could be extracted from the PDF.")
+    return text

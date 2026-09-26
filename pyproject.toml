@@ -8,10 +8,11 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = [
+    "bs4>=0.0.2",
     "openai>=3.19.2",
     "pymupdf>=1.28.2",
     "python-dotenv>=1.2.3",
-    "trafilatura>=2.2.0",
+    "requests>=2.34.2",
 ]
 
 [project.scripts]
