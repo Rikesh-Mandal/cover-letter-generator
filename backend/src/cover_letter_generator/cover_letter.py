@@ -1,3 +1,6 @@
+
+# includes prompts and payload format
+
 def build_messages(cv: str, job_description: str) -> list[dict[str, str]]:
     system_prompt = """
     You are a professional cover letter writer.
